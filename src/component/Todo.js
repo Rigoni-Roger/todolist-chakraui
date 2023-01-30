@@ -9,44 +9,51 @@ import {
   Text,
 } from "@chakra-ui/react";
 import * as React from "react";
+import { useForm } from "react-hook-form";
 
-export const Todo = ({ task, handleDelete, handleEdit }) => {
+export const Todo = React.memo(({ todo, deleteTodo, updateTodo }) => {
+
+  const {done, name} = todo
+
+  const { register, handleSubmit } = useForm({
+    defaultValues: { name: name },
+  });
+
+
   const [isEditing, setIsEditing] = React.useState(false);
-  const [value, setValue] = React.useState(task.name);
-  const [toggle, setToggle] = React.useState(false)
 
-  const handleToggle = () => {
-  setToggle(!toggle)
-}
-
-  const onChange = (e) => {
-    setValue(e.target.value);
+  const handleEdit = () => {
+    setIsEditing((prevState) => !prevState);
   };
 
-  const editSubmit = (e) => {
-    e.preventDefault();
-    handleEdit(task.id, value);
-    // setValue(task.name)
-    setIsEditing(false);
+  const handleUpdateDone = () => {
+    updateTodo({ done: !done });
+  };
+
+  const onSubmit = (data) => {
+    updateTodo(data);
+    handleEdit();
   };
 
   return (
     <Flex alignItems="center">
       {isEditing ? (
-        <form
-          onSubmit={editSubmit}
-        >
-          <Input onChange={onChange} value={value} />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input {...register("name")} />
         </form>
       ) : (
         <>
-          <Checkbox isChecked={toggle} onChange={handleToggle} colorScheme="blue">
-            <Text as={toggle ? "del" : null}>{task.name}</Text>
+          <Checkbox
+            isChecked={done}
+            onChange={handleUpdateDone}
+            colorScheme="blue"
+          >
+            <Text as={done ? "del" : null}>{name}</Text>
           </Checkbox>
           <Spacer />
           <HStack>
             <IconButton
-              onClick={() => setIsEditing(true)}
+              onClick={handleEdit}
               size="xs"
               fontSize={"12px"}
               colorScheme="blue"
@@ -54,7 +61,7 @@ export const Todo = ({ task, handleDelete, handleEdit }) => {
               icon={<EditIcon />}
             />
             <IconButton
-              onClick={() => handleDelete(task.id)}
+              onClick={deleteTodo}
               size="xs"
               fontSize={"12px"}
               colorScheme="blue"
@@ -66,4 +73,4 @@ export const Todo = ({ task, handleDelete, handleEdit }) => {
       )}
     </Flex>
   );
-};
+});
