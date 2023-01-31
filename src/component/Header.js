@@ -1,4 +1,3 @@
-import { HamburgerIcon } from "@chakra-ui/icons";
 import { Box, Heading } from "@chakra-ui/react";
 
 export const Header = () => {
@@ -12,9 +11,8 @@ export const Header = () => {
       height="7vh"
     >
       <Heading size={"md"} ml="20px" color="white">
-        Todo List Project
+        Profile List Project
       </Heading>
-      <HamburgerIcon ml="20px" color="white" mt="4px" />    
     </Box>
   );
 };

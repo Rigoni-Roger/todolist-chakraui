@@ -7,11 +7,10 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import React from "react";
-import { useModalContext } from "../context/ModalProvider";
-import { FormTask } from "./FormTask";
-import { HeaderList } from "./HeaderList";
+import { useModalContext } from "../../context/ModalProvider";
+import { FormModelProfile } from "../FormModelProfile";
 
-export const ModalCreateTask = ({ createTodo }) => {
+export const ModalCreateProfile = ({ createTodo }) => {
   const { isOpen, setIsOpen } = useModalContext();
 
   const handleCreate = (data) => {
@@ -29,15 +28,14 @@ export const ModalCreateTask = ({ createTodo }) => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader display="flex" justifyContent="center">
-            Create your task
+            Create your profile
           </ModalHeader>
           <ModalBody pb={6}>
-            <FormTask handleCreate={handleCreate} />
+            <FormModelProfile todo={null} setToggle={onClose} handleCreate={handleCreate} type="create"/>
           </ModalBody>
           <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
-      <HeaderList />
     </>
   );
 };

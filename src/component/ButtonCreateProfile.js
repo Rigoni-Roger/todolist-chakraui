@@ -2,7 +2,7 @@ import { Box, Button } from "@chakra-ui/react";
 import React from "react";
 import { ModalContext } from "../context/ModalProvider";
 
-export const HeaderList = () => {
+export const ButtonCreateProfile = () => {
   const { setIsOpen } = React.useContext(ModalContext);
   return (
     <Box
@@ -20,7 +20,7 @@ export const HeaderList = () => {
         color="blue.600"
         onClick={() => setIsOpen(true)}
       >
-        Create new task
+        Create new profile
       </Button>
     </Box>
   );

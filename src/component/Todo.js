@@ -4,73 +4,48 @@ import {
   Flex,
   HStack,
   IconButton,
-  Input,
   Spacer,
   Text,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { useForm } from "react-hook-form";
+import { ModalEditProfile } from "./modals/ModalEditProfile";
 
 export const Todo = React.memo(({ todo, deleteTodo, updateTodo }) => {
-
-  const {done, name} = todo
-
-  const { register, handleSubmit } = useForm({
-    defaultValues: { name: name },
-  });
-
-
+  const { name } = todo;
   const [isEditing, setIsEditing] = React.useState(false);
 
-  const handleEdit = () => {
+  const setToggle = () => {
     setIsEditing((prevState) => !prevState);
-  };
-
-  const handleUpdateDone = () => {
-    updateTodo({ done: !done });
-  };
-
-  const onSubmit = (data) => {
-    updateTodo(data);
-    handleEdit();
   };
 
   return (
     <Flex alignItems="center">
-      {isEditing ? (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Input {...register("name")} />
-        </form>
-      ) : (
-        <>
-          <Checkbox
-            isChecked={done}
-            onChange={handleUpdateDone}
-            colorScheme="blue"
-          >
-            <Text as={done ? "del" : null}>{name}</Text>
-          </Checkbox>
-          <Spacer />
-          <HStack>
-            <IconButton
-              onClick={handleEdit}
-              size="xs"
-              fontSize={"12px"}
-              colorScheme="blue"
-              aria-label="edit"
-              icon={<EditIcon />}
-            />
-            <IconButton
-              onClick={deleteTodo}
-              size="xs"
-              fontSize={"12px"}
-              colorScheme="blue"
-              aria-label="edit"
-              icon={<DeleteIcon />}
-            />
-          </HStack>
-        </>
-      )}
+      <ModalEditProfile
+        todo={todo}
+        updateTodo={updateTodo}
+        setToggle={setToggle}
+        isEditing={isEditing}
+      />      
+        <Text>{name}</Text>      
+      <Spacer />
+      <HStack>
+        <IconButton
+          onClick={setToggle}
+          size="xs"
+          fontSize={"12px"}
+          colorScheme="blue"
+          aria-label="edit"
+          icon={<EditIcon />}
+        />
+        <IconButton
+          onClick={deleteTodo}
+          size="xs"
+          fontSize={"12px"}
+          colorScheme="blue"
+          aria-label="edit"
+          icon={<DeleteIcon />}
+        />
+      </HStack>
     </Flex>
   );
 });

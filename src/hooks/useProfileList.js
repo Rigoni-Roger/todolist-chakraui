@@ -1,16 +1,18 @@
 import * as React from "react";
+import { v4 as uuidv4 } from 'uuid';
 
-const TASK_DB = [{ name: "Cortar Grama", done: false, id: 99 }];
+const TASK_DB = [{ name: "Roger Rigoni", sex: 'male', age: 29, id: uuidv4() }];
 
-export const useTodoList = () => {
+export const useProfileList = () => {
   const [todos, setTodos] = React.useState(TASK_DB);
 
   const deleteTodo = (id) => {
     setTodos((prevState) => prevState.filter((item) => item.id !== id));
   };
 
-  const createTodo = ({ name }) => {
-    const newTask = { name, done: false, id: todos.length + 1 };
+  const createTodo = (data) => {
+    console.log(data)
+    const newTask = { ...data, id: uuidv4() };
     setTodos((prevState) => [...prevState, newTask]);
   };
 
